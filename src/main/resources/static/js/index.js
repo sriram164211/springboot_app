@@ -19,12 +19,34 @@ toggelButton.addEventListener("click", function () {
     displayUser(users[currentUserId]);
 });
 
+
+var nextUserButton= document.getElementById("btn-nextuser");
+nextUserButton.addEventListener("click", function () {
+    fetch('https://randomuser.me/api/')
+    .then(function(res){
+        return res.json();
+    })
+    .then(function(data){
+        var user = data.results[0];
+        var userJson = {
+            "Name": user.name.title+" "+user.name.first+" "+user.name.last,
+            "Gender": user.gender,
+            "Image": user.picture.large
+        }
+        displayUser(userJson);
+    
+    })
+    .catch(function(err){
+        console.log("Error: "+err);
+    });
+});
+
 var img = document.getElementById("user-image");
 var gender = document.getElementById("user-gender");
-var name = document.getElementById("user-name");
+var username = document.getElementById("user-name");
 
 function displayUser(userJson) {
-    name.innerText = userJson.Name;
+    username.innerText = userJson.Name;
     gender.innerText = userJson.Gender;
     img.src = userJson.Image;
 }
