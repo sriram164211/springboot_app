@@ -41,6 +41,27 @@ nextUserButton.addEventListener("click", function () {
     });
 });
 
+
+var myUserButton= document.getElementById("btn-myuser");
+myUserButton.addEventListener("click", function () {
+    fetch('/api/users/random')
+    .then(function(res){
+        return res.json();
+    })
+    .then(function(data){
+        var user = data;
+        var userJson = {
+            "Name": user.name,
+            "Gender": user.gender,
+            "Image": user.imgUrl
+        }
+        displayUser(userJson);
+    })
+    .catch(function(err){
+        console.log("Error: "+err);
+    });
+});
+
 var img = document.getElementById("user-image");
 var gender = document.getElementById("user-gender");
 var username = document.getElementById("user-name");
